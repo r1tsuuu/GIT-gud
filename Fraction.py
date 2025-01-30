@@ -27,3 +27,8 @@ class Fraction(object):
         
         if self.numerator % self.denominator == 0:
             return self.numerator // self.denominator
+        else :
+            return str(self.numerator) + "/" + str(self.denominator)
+        
+
+
