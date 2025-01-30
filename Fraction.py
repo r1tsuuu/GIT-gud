@@ -1,15 +1,26 @@
 class Fraction(object):
 
     def __init__(self, numerator=0, denominator=1):
-        if not numerator.isnumeric() and denominator.isnumeric():
-            print("Invalid input.")
+        if isinstance(numerator,float) or isinstance(denominator,float):
+            print("Invalid input") 
             return
         
-        if denominator == 0:
-            print("Cannot divide by 0.")
+        if isinstance(numerator,str):
+            for char in numerator:
+                if char.isdigit():
+                 result = numerator.split("/")
+                 self.numerator = int(result[0])
+                 self.denominator = int(result[1])
+                 break
+
         
-        self.numerator = numerator
-        self.denominator = denominator
+        if denominator == 0:
+            raise ZeroDivisionError
+        
+        
+        if isinstance(numerator,int) and isinstance(denominator,int):
+            self.numerator = int(numerator)
+            self.denominator = int(denominator)
 
 
     def gcd(a, b):
@@ -30,6 +41,7 @@ class Fraction(object):
         return str(self.denominator)
 
     def get_fraction(self):
+        #TODO Attribute error need to debug
         if self.denominator == 1:
             return self.numerator
         
