@@ -22,17 +22,18 @@ class Fraction(object):
             self.numerator = int(numerator)
             self.denominator = int(denominator)
 
-
     def gcd(a, b):
-        
-        result = min(a, b)
+        """
+        Return the Greatest Common Divisor (GCD) of two integers.
+        If one or both of them is 0, then it returns 0.
+        """
+        if a == 0 or b == 0:
+            return 0
 
-        while result:    
-            if (a % result == 0) and (b % result == 0):
-                break
-            result -= 1
-            
-        return result
+        while b:
+            a, b = b, a % b  # Apply Euclidean algorithm
+
+        return abs(a)  # Ensure non-negative output
 
     def get_numerator(self):
         return str(self.numerator)
