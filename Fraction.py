@@ -5,31 +5,52 @@ class Fraction(object):
             raise ZeroDivisionError("The denominator cannot be 0.")
 
         if isinstance(numerator,float) or isinstance(denominator,float):
-            raise TypeError("Invalid input. Please input integers or a fraction string.")
+            self.numerator = 0
+            self.denominator = 1
         
         if isinstance(numerator,str) and denominator == 1:
             fraction_string = numerator.strip()
 
             if '/' in fraction_string:
-                try:
-                    fraction_string = fraction_string.split('/')
-                    num, denom = int(fraction_string[0]), int(fraction_string[1])
-
-                    if denom == 0:
-                        raise ZeroDivisionError("The denominator cannot be 0.")
-                        
-                    self.numerator, self.denominator = num, denom
+                if fraction_string.count('/') > 1:
+                    self.numerator = 0
+                    self.denominator = 1
                 
-                except ValueError:
-                    raise ValueError("Invalid fraction string format.")
+                else:
+                    try:
+                        fraction_string = fraction_string.split('/')
+                        num, denom = int(fraction_string[0]), int(fraction_string[1])
+
+                        if denom == 0:
+                            raise ZeroDivisionError("The denominator cannot be 0.")
+                            
+                        self.numerator, self.denominator = num, denom
+                    
+                    except ValueError:
+                        self.numerator = 0
+                        self.denominator = 1
+            
+            elif "." in fraction_string:
+                self.numerator = 0
+                self.denominator = 1
+
+            
+            elif any(c.isalpha() for c in fraction_string):
+                self.numerator = 0
+                self.denominator = 1
+
+            else: 
+                self.numerator = numerator
+                self.denominator = denominator
 
         elif isinstance(numerator, int) and isinstance(denominator, int):
             self.numerator = numerator
             self.denominator = denominator
             
         else:
-            raise TypeError("Invalid input. Please input integers or a fraction string.")
-
+            self.numerator = 0
+            self.denominator = 1
+            
     def gcd(a, b):
         """
         Return the Greatest Common Divisor (GCD) of two integers.
@@ -50,7 +71,6 @@ class Fraction(object):
         return self.denominator
 
     def get_fraction(self):
-        #TODO Attribute error need to debug
         numerator = self.get_numerator()
         denominator = self.get_denominator()
         gcd = Fraction.gcd(self.numerator, self.denominator)
@@ -74,5 +94,4 @@ class Fraction(object):
         
         
         
-
 
