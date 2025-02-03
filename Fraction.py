@@ -13,7 +13,7 @@ class Fraction(object):
             if '/' in fraction_string:
                 try:
                     fraction_string = fraction_string.split('/')
-                    num, denom = fraction_string[0], fraction_string[1]
+                    num, denom = int(fraction_string[0]), int(fraction_string[1])
 
                     if denom == 0:
                         raise ZeroDivisionError("The denominator cannot be 0.")
@@ -44,20 +44,35 @@ class Fraction(object):
         return abs(a)  # Ensure non-negative output
 
     def get_numerator(self):
-        return str(self.numerator)
+        return self.numerator
 
     def get_denominator(self):
-        return str(self.denominator)
+        return self.denominator
 
     def get_fraction(self):
         #TODO Attribute error need to debug
-        if self.denominator == 1:
-            return self.numerator
+        numerator = self.get_numerator()
+        denominator = self.get_denominator()
+        gcd = Fraction.gcd(self.numerator, self.denominator)
+
+        if numerator == 0:
+            return "0"
         
-        if self.numerator % self.denominator == 0:
-            return self.numerator // self.denominator
-        else :
-            return str(self.numerator) + "/" + str(self.denominator)
+        if denominator == 1:
+            return numerator
+        
+        if gcd != 0:
+            numerator = numerator //gcd
+            denominator = denominator //gcd 
+
+        if denominator < 0:
+            numerator = numerator*-1
+            denominator = denominator*-1
+
+        return str(numerator) + "/" + str(denominator)
+
+        
+        
         
 
 
